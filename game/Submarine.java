@@ -9,14 +9,14 @@ class Submarine {
         this.currentCell = startCell;
     }
 
-    public void move(String cellCode, int teamId, Map map) { // [A-1]
+    public char getCode() {
+        return this.code;
+    }
+
+    public void move(MapCell toCell, int teamId) {
         this.currentCell.removeSubmarine(teamId);
 
-        int[] res = Util.parseCellCode(cellCode);
-        int y = res[0];
-        int x = res[1];
-
-        this.currentCell = map.getCell(y, x);
+        this.currentCell = toCell;
         this.currentCell.setSubmarine(this, teamId);
     }
 
