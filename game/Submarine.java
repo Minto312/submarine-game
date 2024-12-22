@@ -1,24 +1,31 @@
 class Submarine {
+    private char code;
     private int hp;
-    private int x, y;
+    private MapCell currentCell;
 
-    public Submarine(int startX, int startY) {
-        this.hp = 100;
-        this.x = startX;
-        this.y = startY;
+    public Submarine(MapCell startCell, char code) {
+        this.code = code;
+        this.hp = 3;
+        this.currentCell = startCell;
     }
 
-    public void move(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
+    public void move(String cellCode, int teamId, Map map) { // [A-1]
+        this.currentCell.removeSubmarine(teamId);
+
+        int[] res = Util.parseCellCode(cellCode);
+        int y = res[0];
+        int x = res[1];
+
+        this.currentCell = map.getCell(y, x);
+        this.currentCell.setSubmarine(this, teamId);
     }
 
     public void takeDamage(int damage) {
-        this.hp -= damage;
-        if (this.hp < 0) this.hp = 0;
+        this.hp -= 1;
+        if (this.hp == 0) {
+            this.currentCell.sinkSubmarine();
+            // チームの潜水艦を削除
+        }
     }
 
-    public boolean isAlive() {
-        return this.hp > 0;
-    }
 }
