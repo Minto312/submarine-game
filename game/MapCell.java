@@ -1,32 +1,43 @@
 
 
 public class MapCell {
-    private int x, y;
-    private boolean isOccupied;
-    private Submarine submarine;
+    private static final int PLAYER_COUNT = 2;
 
-    public MapCell(int x, int y) {
+    private int x, y; // 0-6
+    private boolean isBlocked;
+    private Submarine[] submarine;
+
+
+    public MapCell(int x, int y, boolean isBlocked) {
         this.x = x;
         this.y = y;
-        this.isOccupied = false;
-        this.submarine = null;
+        this.isBlocked = isBlocked;
+        this.submarine = new Submarine[PLAYER_COUNT];
     }
 
-    public void occupyCell(Submarine submarine) {
-        this.isOccupied = true;
-        this.submarine = submarine;
+    public void sinkSubmarine() {
+        this.isBlocked = true;
     }
 
-    public void vacateCell() {
-        this.isOccupied = false;
-        this.submarine = null;
+    public boolean isBlocked() {
+        return this.isBlocked;
     }
 
-    public boolean isOccupied() {
-        return this.isOccupied;
+    public void setSubmarine(Submarine submarine, int teamId) {
+        if (this.submarine[teamId] != null) throw new IllegalArgumentException("Submarine already exists");
+        this.submarine[teamId] = submarine;
     }
 
-    public Submarine getSubmarine() {
-        return this.submarine;
+    public void removeSubmarine(int teamId) {
+        if (this.submarine[teamId] == null) throw new IllegalArgumentException("No submarine to remove");
+        this.submarine[teamId] = null;
+    }
+
+    public Submarine getSubmarine(int teamId) {
+        return this.submarine[teamId];
+    }
+
+    public boolean existSubmarine(int teamId) {
+        return this.submarine[teamId] != null;
     }
 }
