@@ -13,6 +13,10 @@ class Submarine {
         return this.code;
     }
 
+    public MapCell getCurrentCell() {
+        return this.currentCell;
+    }
+
     public void move(MapCell toCell, int teamId) {
         this.currentCell.removeSubmarine(teamId);
 

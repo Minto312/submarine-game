@@ -1,19 +1,26 @@
+import java.util.ArrayList;
 
 
 public class SubmarineGame {
-    public static void main(String[] args) {
-        Map map = new Map();
-        Team team1 = new Team();
-        Team team2 = new Team();
-        History history = new History();
+    private int turn;
+    private Map map;
+    private Team[] teams;
+    private History history;
 
-        // Example moves
-        team1.makeMove(0, 2, 2);
-        history.logAction("Team 1 submarine 0 moved to (2, 2)");
+    public SubmarineGame(int startTeam) {
+        this.turn = startTeam;
+        this.map = new Map();
+        for (int i = 0; i < 2; i++) {
+            this.teams[i] = new PlayableTeam(map, i);
+        }
+        this.history = new History();
+    }
 
-        team2.makeMove(1, 3, 3);
-        history.logAction("Team 2 submarine 1 moved to (3, 3)");
+    public ArrayList<String> nextTurn() {
+        ArrayList<String> logs = new ArrayList<String>();
+        Team team = teams[turn % 2];
+        logs = team.takeTurn(map);
 
-        history.printHistory();
+        return logs;
     }
 } 

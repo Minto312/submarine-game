@@ -1,5 +1,5 @@
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public class Map {
@@ -23,29 +23,28 @@ public class Map {
         return this.grid[y][x];
     }
 
-    public int[][] calculateAttackArea(Team team) {
-        Vector<MapCell> attackableCells = new Vector<MapCell>();
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                    MapCell cell = grid[x + i][y + j];
-                    if (!cell.isBlocked() && cell.getSubmarine() == null) {
-                        attackableCells.add(cell);
-                    }
-                    range[x + i][y + j] = 1;
-            }
+    public ArrayList<MapCell> calculateAttackArea(Team team) {
+        ArrayList<MapCell> attackableCells = new ArrayList<MapCell>();
+        ArrayList<Submarine> submarines = team.getSubmarineList();
+        ArrayList<MapCell> submarineCells = new ArrayList<MapCell>();
+        for (Submarine submarine : submarines) {
+            submarineCells.add(submarine.getCurrentCell());
         }
-        return range;
-    }
 
-    public int[][] calculateMovementRange(int x, int y) {
-        int[][] range = new int[SIZE][SIZE];
-        for (int i = -2; i <= 2; i++) {
-            for (int j = -2; j <= 2; j++) {
-                if (isWithinBounds(x + i, y + j)) {
-                    range[x + i][y + j] = 1;
+        for (MapCell submarineCell : submarineCells) {
+            int x = submarineCell.getX();
+            int y = submarineCell.getY();
+            
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                        MapCell cell = grid[x + i][y + j];
+                        if (!cell.isBlocked() && cell.getSubmarine(team.getTeamId()) == null) {
+                            attackableCells.add(cell);
+                        }
                 }
             }
         }
-        return range;
+        return attackableCells;
     }
+
 }

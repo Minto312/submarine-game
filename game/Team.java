@@ -1,14 +1,14 @@
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public abstract class Team {
     private static final int SUBMARINE_COUNT = 4;
     private int teamId;
-    private Vector<Submarine> submarineList;
+    private ArrayList<Submarine> submarineList;
 
     public Team(Map map, int teamId) {
         this.teamId = teamId;
-        submarineList = new Vector<Submarine>(SUBMARINE_COUNT);
+        submarineList = new ArrayList<Submarine>(SUBMARINE_COUNT);
         for (int i = 0; i < SUBMARINE_COUNT; i++) {
             MapCell startCell = map.getCell(0, i); // strategyで決める
             
@@ -18,7 +18,7 @@ public abstract class Team {
         }
     }
 
-    public Vector<Submarine> getSubmarineList() {
+    public ArrayList<Submarine> getSubmarineList() {
         return submarineList;
     }
 
@@ -40,5 +40,9 @@ public abstract class Team {
 
     }
 
-    public abstract void takeTurn(Map map);
+    public int getTeamId() {
+        return this.teamId;
+    }
+
+    public abstract ArrayList<String> takeTurn(Map map);
 }

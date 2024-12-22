@@ -23,6 +23,13 @@ public class MapCell {
         return this.isBlocked;
     }
 
+    public int getX() {
+        return this.x;
+    }
+    public int getY() {
+        return this.y;
+    }
+
     public void setSubmarine(Submarine submarine, int teamId) {
         if (this.submarine[teamId] != null) throw new IllegalArgumentException("Submarine already exists");
         this.submarine[teamId] = submarine;

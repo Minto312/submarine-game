@@ -1,10 +1,10 @@
-
+import java.util.ArrayList;
 
 class History {
-    private List<String> logs;
+    private ArrayList<String> logs;
 
     public History() {
-        logs = new ArrayList<>();
+        logs = new ArrayList<String>();
     }
 
     public void logAction(String action) {
