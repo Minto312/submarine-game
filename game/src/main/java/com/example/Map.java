@@ -1,5 +1,8 @@
 package com.example;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Map {
@@ -45,6 +48,26 @@ public class Map {
             }
         }
         return attackableCells;
+    }
+
+    public String toJson() {
+        ObjectMapper mapper = new ObjectMapper();
+        List<MapCell> cells = new ArrayList<>();
+        
+        // 全てのセルをリストに格納
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                cells.add(grid[i][j]);
+            }
+        }
+
+        try {
+            // JSON文字列に変換
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(cells);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "{}";
+        }
     }
 
 }

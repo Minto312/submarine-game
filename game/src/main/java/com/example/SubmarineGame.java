@@ -24,6 +24,11 @@ public class SubmarineGame {
         Team team = teams[turn % 2];
         logs = team.takeTurn(map);
 
+        System.out.println("Turn " + turn + ":");
+        System.out.println("Team " + (turn % 2) + " took a turn.");
+        System.out.println("Map:");
+        System.out.println(map.toJson());
+        
         return logs;
     }
 } 

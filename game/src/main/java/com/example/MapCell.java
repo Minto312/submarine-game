@@ -52,6 +52,7 @@ public class MapCell {
         this.submarine[teamId] = null;
     }
 
+    @JsonProperty("submarine")
     public Submarine getSubmarine(int teamId) {
         return this.submarine[teamId];
     }
