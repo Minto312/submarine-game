@@ -10,6 +10,8 @@ public class SubmarineGame {
     public SubmarineGame(int startTeam) {
         this.turn = startTeam;
         this.map = new Map();
+        
+        this.teams = new Team[2];
         for (int i = 0; i < 2; i++) {
             this.teams[i] = new PlayableTeam(map, i);
         }
