@@ -1,3 +1,5 @@
+package com.example;
+
 public class Util {
     public static int[] parseCellCode(String cellCode) {
         int y = cellCode.charAt(1) - 'A' + 1;

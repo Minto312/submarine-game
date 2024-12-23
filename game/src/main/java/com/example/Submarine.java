@@ -1,4 +1,5 @@
-class Submarine {
+package com.example;
+public class Submarine {
     private int teamId;
     private char code;
     private int hp;

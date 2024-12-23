@@ -1,5 +1,5 @@
+package com.example;
 import java.util.ArrayList;
-
 
 public abstract class Team {
     private static final int SUBMARINE_COUNT = 4;
