@@ -31,12 +31,21 @@ public class MapCell {
     }
 
     public void setSubmarine(Submarine submarine, int teamId) {
-        if (this.submarine[teamId] != null) throw new IllegalArgumentException("Submarine already exists");
+        if (this.submarine[teamId] != null) {
+            throw new IllegalArgumentException("Submarine already exists");
+        }
+        if (this.isBlocked) {
+            throw new IllegalArgumentException("Cell is blocked");
+        }
+        
         this.submarine[teamId] = submarine;
     }
 
     public void removeSubmarine(int teamId) {
-        if (this.submarine[teamId] == null) throw new IllegalArgumentException("No submarine to remove");
+        if (this.submarine[teamId] == null) {
+            throw new IllegalArgumentException("No submarine to remove");
+        }
+        
         this.submarine[teamId] = null;
     }
 

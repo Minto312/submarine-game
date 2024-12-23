@@ -14,7 +14,7 @@ public abstract class Team {
             
             char code = (char)('a' + i);
 
-            submarineList.add(new Submarine(startCell, code));
+            submarineList.add(new Submarine(startCell, code, teamId));
         }
     }
 
@@ -29,7 +29,7 @@ public abstract class Team {
 
         MapCell toCell = map.getCell(y, x);
         for (Submarine submarine : submarineList) {
-            if (submarine.getCode() == submarineCode) submarine.move(toCell, this.teamId);
+            if (submarine.getCode() == submarineCode) submarine.move(toCell);
         }
     }
 
