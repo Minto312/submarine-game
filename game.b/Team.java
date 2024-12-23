@@ -10,7 +10,7 @@ public abstract class Team {
         this.teamId = teamId;
         submarineList = new ArrayList<Submarine>(SUBMARINE_COUNT);
         for (int i = 0; i < SUBMARINE_COUNT; i++) {
-            MapCell startCell = map.getCell(0, i); // strategyで決める
+            MapCell startCell = map.getCell(2, i+1); // strategyで決める
             
             char code = (char)('a' + i);
 

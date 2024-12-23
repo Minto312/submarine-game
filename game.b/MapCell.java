@@ -1,4 +1,4 @@
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MapCell {
     private static final int PLAYER_COUNT = 2;
@@ -23,9 +23,11 @@ public class MapCell {
         return this.isBlocked;
     }
 
+    @JsonProperty("x")
     public int getX() {
         return this.x;
     }
+    @JsonProperty("y")
     public int getY() {
         return this.y;
     }
@@ -45,7 +47,7 @@ public class MapCell {
         if (this.submarine[teamId] == null) {
             throw new IllegalArgumentException("No submarine to remove");
         }
-        
+
         this.submarine[teamId] = null;
     }
 
