@@ -1,0 +1,36 @@
+{
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "build",
+      "command": "mvn",
+      "args": [
+        "-f",
+        "${workspaceFolder}/game/pom.xml",
+        "clean",
+        "package"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
+      "label": "run",
+      "command": "java",
+      "args": [
+        "-cp",
+        "target/classes:target/dependency/*",
+        "com.example.game"
+      ]
+    },
+    {
+      "label": "build-and-run",
+      "dependsOn": ["build", "run"],
+      "type": "shell",
+      "command": "echo",
+      "args": ["Running after build..."]
+    }
+  ]
+}
