@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node,java,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,java,react
 
+settings.json
+eclipse-java-google-style.xml
+
 ### Java ###
 # Compiled class file
 *.class
