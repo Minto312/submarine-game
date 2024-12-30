@@ -28,7 +28,11 @@ public class Submarine {
         this.currentCell.setSubmarine(this, this.teamId);
     }
 
-    public void takeDamage(int damage) {
+    public int getHp() {
+        return this.hp;
+    }
+
+    public void takeDamage() {
         this.hp -= 1;
         if (this.hp == 0) {
             this.currentCell.sinkSubmarine();
