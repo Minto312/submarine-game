@@ -58,7 +58,6 @@ public class Submarine {
         this.hp -= 1;
         if (this.hp == 0) {
             this.currentCell.sinkSubmarine();
-            // チームの潜水艦を削除
         }
     }
 

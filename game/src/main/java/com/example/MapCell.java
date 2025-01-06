@@ -17,6 +17,7 @@ public class MapCell {
 
     public void sinkSubmarine() {
         this.isBlocked = true;
+        this.submarine = new Submarine[PLAYER_COUNT]; // 相手の潜水艦も存在しない
     }
 
     public boolean isBlocked() {
