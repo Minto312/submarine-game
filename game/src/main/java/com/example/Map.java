@@ -47,4 +47,29 @@ public class Map {
         return attackableCells;
     }
 
+    public void showMap(int teamId, Submarine[] submarines) {
+        System.out.println("  0 1 2 3 4 5 6");
+        for (int i = 0; i < SIZE; i++) {
+            if (i == 0 || i == SIZE - 1) {
+                System.out.print(i + " ");
+            } else {
+                System.out.print((char)('A'+i-1) + " ");
+            }
+            for (int j = 0; j < SIZE; j++) {
+                MapCell cell = grid[i][j];
+                if (cell.existSubmarine(teamId)) {
+                    System.out.print(cell.getSubmarine(teamId).getCode() + " ");
+                } else if (cell.isBlocked()) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+        for (int k=0; k<4; k++) {
+            System.out.println((char)('a'+k) + ": " + submarines[k].getHp() + " ");
+        }
+    }
+
 }

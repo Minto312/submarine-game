@@ -121,9 +121,10 @@ public class Strategy {
 
     public static void performTurn(Map map) {
         Random random = new Random();
-        if (random.nextInt(10) > 5) {
+        if (random.nextInt(10) > -1) {
             move(map);
         } else {
+            move(map);
             // attack(map);
         }
     }
@@ -177,6 +178,7 @@ public class Strategy {
         strategy.submarines = strategy.initializeSubmarines(map);
 
         while (true) {
+            map.showMap(TEAM_ID, strategy.submarines);
             String input = scanner.nextLine();
             String[] inputArray = input.split(" ");
 
