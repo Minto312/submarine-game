@@ -108,16 +108,24 @@ public class Strategy {
         return submarines_;
     }
 
-    public static void performTurn(Map map) {
+    public static void move(Map map) {
         Random random = new Random();
         while (true) {
             MapCell toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
-            System.out.println("[debug] toCell: (" + toCell.getY() + ", " + toCell.getX() + ")");
             Submarine canMoveSubmarine = canPlace(map, toCell.getY(), toCell.getX());
             if (canMoveSubmarine != null) {
                 canMoveSubmarine.move(toCell);
                 break;
             }
+        }
+    }
+
+    public static void performTurn(Map map) {
+        Random random = new Random();
+        if (random.nextInt(10) > 5) {
+            move(map);
+        } else {
+            attack(map);
         }
     }
 
