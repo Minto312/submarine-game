@@ -97,7 +97,6 @@ public class Strategy {
                     // 潜水艦を配置
                     MapCell cell = map.getCell(y, x); // セルを取得
                     char submarineCode = (char) ('a' + i); // 潜水艦のコード（a, b, c, d）
-                    System.out.println("潜水艦 " + cell.getY() + ", " + cell.getX());
                     submarines_[i] = new Submarine(cell, submarineCode, TEAM_ID); // 0番チームの潜水艦 cell.setSubmarine(submarine, 0);  // セルに潜水艦を配置
                     System.out.println(
                             "潜水艦 " + submarineCode + " が位置 (" + y + ", " + x + ") に配置されました。");
@@ -125,7 +124,46 @@ public class Strategy {
         if (random.nextInt(10) > 5) {
             move(map);
         } else {
-            attack(map);
+            // attack(map);
+        }
+    }
+
+    public static void respondAttack(Map map, String cellCode) {
+        int[] res = Util.parseCellCode(cellCode);
+        int y = res[0];
+        int x = res[1];
+
+        MapCell cell = map.getCell(y, x);
+        if (cell.existSubmarine(TEAM_ID)) {
+            System.out.println("命中！");
+            System.out.println("[debug] 潜水艦 " + cell.getSubmarine(TEAM_ID).getCode() + " が攻撃されました");
+            Submarine attackedSubmarine = cell.getSubmarine(TEAM_ID);
+            attackedSubmarine.takeDamage();
+            return;
+        }
+
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                if (dy == 0 && dx == 0) {
+                    continue;
+                }
+
+                int neighborY = y + dy;
+                int neighborX = x + dx;
+
+                MapCell neighborCell;
+                try {
+                    neighborCell = map.getCell(neighborY, neighborX);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    continue;
+                }
+
+                if (neighborCell.existSubmarine(TEAM_ID)) {
+                    System.out.println("波高し！");
+                    System.out.println("潜水艦 " + neighborCell.getSubmarine(TEAM_ID).getCode() + " 近くにあります");
+                    return;
+                }
+            }
         }
     }
 
@@ -142,7 +180,12 @@ public class Strategy {
             String input = scanner.nextLine();
             String[] inputArray = input.split(" ");
 
-            performTurn(map);
+            if (inputArray[0].equals("a")) {
+                String cellCode = inputArray[1];
+                respondAttack(map, cellCode);
+            } else {
+                performTurn(map);
+            }
             // 相手の行動
             // if(/*相手が攻撃してきたら*/){break;}
         }
