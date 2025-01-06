@@ -2,6 +2,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Strategy",
+      "request": "launch",
+      "mainClass": "com.example.Strategy",
+      "projectName": "game"
+    },
+    {
+      "type": "java",
       "request": "launch",
       "name": "Launch Game",
       "mainClass": "com.example.game",
@@ -11,7 +18,7 @@
       ],
       "projectName": "game",
       "preLaunchTask": "build",
-      "postDebugTask": "run",
+      "postDebugTask": "run"
     }
   ],
   "inputs": [

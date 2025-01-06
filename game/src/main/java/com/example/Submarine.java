@@ -1,4 +1,4 @@
-package com.example;
+// package com.example;
 public class Submarine {
     private int teamId;
     private char code;
@@ -22,6 +22,28 @@ public class Submarine {
     }
 
     public void move(MapCell toCell) {
+        int dy = toCell.getY() - this.currentCell.getY();
+        int dx = toCell.getX() - this.currentCell.getX();
+
+        System.out.println("[debug] currentCell: (" + this.currentCell.getY() + ", " + this.currentCell.getX() + ")");
+        System.out.println("[debug] toCell: (" + toCell.getY() + ", " + toCell.getX() + ")");
+        String direction = "";
+        System.out.println("[debug] dy: " + dy + ", dx: " + dx);
+
+        int distance = Math.abs(dy) + Math.abs(dx);
+        if (dy < 0) {
+            direction = "北";
+        } else if (dy > 0) {
+            direction = "南";
+        } else if (dx > 0) {
+            direction = "東";
+        } else if (dx < 0) {
+            direction = "西";
+        }
+        System.out.println("[debug] 潜水艦 " + this.code + " が " + direction + " に " + distance
+                + " マス移動しました。(" + toCell.getY() + ", " + toCell.getX() + ")");
+        System.out.println("潜水艦を"+direction+"に"+distance+"マス移動！");
+
         this.currentCell.removeSubmarine(this.teamId);
 
         this.currentCell = toCell;

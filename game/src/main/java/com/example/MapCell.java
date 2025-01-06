@@ -1,5 +1,4 @@
-package com.example;
-import com.fasterxml.jackson.annotation.JsonProperty;
+// package com.example;
 
 public class MapCell {
     private static final int PLAYER_COUNT = 2;
@@ -9,7 +8,7 @@ public class MapCell {
     private Submarine[] submarine;
 
 
-    public MapCell(int x, int y, boolean isBlocked) {
+    public MapCell(int y, int x, boolean isBlocked) {
         this.x = x;
         this.y = y;
         this.isBlocked = isBlocked;
@@ -24,11 +23,9 @@ public class MapCell {
         return this.isBlocked;
     }
 
-    @JsonProperty("x")
     public int getX() {
         return this.x;
     }
-    @JsonProperty("y")
     public int getY() {
         return this.y;
     }
