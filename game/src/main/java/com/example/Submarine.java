@@ -58,6 +58,8 @@ public class Submarine {
         this.hp -= 1;
         if (this.hp == 0) {
             this.currentCell.sinkSubmarine();
+            System.out.println("[debug] 潜水艦 " + this.code + " が沈みました。");
+            System.out.println("命中！撃沈！");
         }
     }
 
