@@ -47,7 +47,7 @@ public class Map {
         return attackableCells;
     }
 
-    public void showMap(int teamId, Submarine[] submarines) {
+    public void showMap(int teamId, ArrayList<Submarine> submarines) {
         System.out.println("  0 1 2 3 4 5 6");
         for (int i = 0; i < SIZE; i++) {
             if (i == 0 || i == SIZE - 1) {
@@ -67,8 +67,8 @@ public class Map {
             }
             System.out.println();
         }
-        for (int k=0; k<4; k++) {
-            System.out.println((char)('a'+k) + ": " + submarines[k].getHp() + " ");
+        for (Submarine submarine : submarines) {
+            System.out.println(submarine.getCode() + ": " + submarine.getHp() + " ");
         }
     }
 
