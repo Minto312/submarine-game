@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Map {
     private static final int SIZE = 7;
-    private MapCell[][] grid;
+    private final MapCell[][] grid;
 
     public Map() {
         grid = new MapCell[SIZE][SIZE];
@@ -24,9 +24,9 @@ public class Map {
     }
 
     public ArrayList<MapCell> calculateAttackArea(Team team) {
-        ArrayList<MapCell> attackableCells = new ArrayList<MapCell>();
+        ArrayList<MapCell> attackableCells = new ArrayList<>();
         ArrayList<Submarine> submarines = team.getSubmarineList();
-        ArrayList<MapCell> submarineCells = new ArrayList<MapCell>();
+        ArrayList<MapCell> submarineCells = new ArrayList<>();
         for (Submarine submarine : submarines) {
             submarineCells.add(submarine.getCurrentCell());
         }
