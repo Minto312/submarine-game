@@ -3,12 +3,12 @@ import java.util.Scanner;
 
 public class Game {
     private final Map map;
-    private int turn;
+    private int currentTeam;
     private final Team[] teams;
     private final History history;
 
     public Game(int firstTeamId) {
-        this.turn = firstTeamId;
+        this.currentTeam = firstTeamId;
         this.map = new Map();
         
         this.teams = new Team[2];
@@ -32,9 +32,11 @@ public class Game {
             map.showMap(0, game.teams[0].getSubmarineList());
             map.showMap(1, game.teams[1].getSubmarineList());
 
-            Log log = game.teams[game.turn % 2].takeTurn(game);
-            game.teams[(game.turn+1) % 2].tellResponse(log, game);
+            Log log = game.teams[game.currentTeam % 2].takeTurn(game);
+            game.teams[(game.currentTeam+1) % 2].tellResponse(log, game);
 
+            game.history.addLog(log);
+            game.currentTeam++;
         }
     }
 }
