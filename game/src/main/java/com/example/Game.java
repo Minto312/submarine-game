@@ -35,6 +35,7 @@ public class Game {
             Log log = game.teams[game.currentTeam % 2].takeTurn(game);
             game.teams[(game.currentTeam+1) % 2].tellResponse(log, game);
 
+            log.showLog(); 
             game.history.addLog(log);
             game.currentTeam++;
         }

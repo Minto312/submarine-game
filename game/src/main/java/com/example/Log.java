@@ -19,4 +19,8 @@ public class Log {
     public void setReaction(String reaction) {
         this.reaction = reaction;
     }
+
+    public void showLog() {
+        System.out.println("[" + this.turn + "ターン目] " + this.doTeamId + "チーム: " + this.performType + " " + this.toCell.getY() + ", " + this.toCell.getX() + " " + this.reaction);
+    }
 }
