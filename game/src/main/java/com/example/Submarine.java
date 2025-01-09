@@ -52,6 +52,8 @@ public class Submarine {
 
         this.currentCell = toCell;
         this.currentCell.setSubmarine(this, this.teamId);
+
+        return reaction;
     }
 
     public int getHp() {

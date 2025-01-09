@@ -178,7 +178,7 @@ public class Strategy {
         strategy.submarines = strategy.initializeSubmarines(map);
 
         while (true) {
-            map.showMap(TEAM_ID, strategy.submarines);
+            // map.showMap(TEAM_ID, strategy.submarines);
             String input = scanner.nextLine();
             String[] inputArray = input.split(" ");
 

@@ -1,7 +1,4 @@
 // package com.example;
-import java.lang.classfile.Signature;
-import java.time.temporal.TemporalAccessor;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
