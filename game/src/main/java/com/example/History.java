@@ -1,19 +1,19 @@
-package com.example;
+// package com.example;
 import java.util.ArrayList;
 
 class History {
-    private ArrayList<String> logs;
+    private ArrayList<Log> logs;
 
     public History() {
-        logs = new ArrayList<String>();
+        logs = new ArrayList<>();
     }
 
-    public void logAction(String action) {
-        logs.add(action);
+    public void addLog(Log log) {
+        logs.add(log);
     }
 
     public void printHistory() {
-        for (String log : logs) {
+        for (Log log : logs) {
             System.out.println(log);
         }
     }

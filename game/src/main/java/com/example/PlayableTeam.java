@@ -1,26 +1,33 @@
-package com.example;
+// package com.example;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class PlayableTeam extends Team {
+
     public PlayableTeam(Map map, int teamId) {
         super(map, teamId);
     }
 
     @Override
-    public ArrayList<String> takeTurn(Map map) {
-        ArrayList<String> logs = new ArrayList<String>();
-        Scanner sc = new Scanner(System.in);
+    public Log takeTurn(Map map) {
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        String[] inputArray = input.split(" ");
 
-        System.out.println("Enter the submarine code and the cell code: ");
-        String input = sc.nextLine();
-        String[] inputs = input.split(" ");
-        char submarineCode = inputs[0].charAt(0);
-        String cellCode = inputs[1];
+        if (inputArray[0].equals("m")) {
+            String cellCode = inputArray[1];
+            this.respondAttack(map, cellCode);
+        } 
 
-        move(submarineCode, cellCode, map);
+        if (inputArray[0].equals("a")) {
+            String cellCode = inputArray[1];
+            respondAttack(map, cellCode);
+        } 
+
+        ArrayList<Log> logs = new ArrayList<>();
 
         return logs;
     }
-    
+
 }
