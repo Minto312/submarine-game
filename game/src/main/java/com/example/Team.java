@@ -4,18 +4,10 @@ import java.util.ArrayList;
 public abstract class Team {
     private static final int SUBMARINE_COUNT = 4;
     private int TEAM_ID;
-    private ArrayList<Submarine> submarineList;
+    protected ArrayList<Submarine> submarineList;
 
     public Team(Map map, int teamId) {
         this.TEAM_ID = teamId;
-        submarineList = new ArrayList<>(SUBMARINE_COUNT);
-        for (int i = 0; i < SUBMARINE_COUNT; i++) {
-            MapCell startCell = map.getCell(2, i+1); // strategyで決める
-            
-            char code = (char)('a' + i);
-
-            submarineList.add(new Submarine(startCell, code, TEAM_ID));
-        }
     }
 
     public ArrayList<Submarine> getSubmarineList() {

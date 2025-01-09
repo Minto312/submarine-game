@@ -25,12 +25,12 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game(0);
-        Map map = new Map();
         Scanner scanner = new Scanner(System.in);
         
         while (true) {
-            map.showMap(0, game.teams[0].getSubmarineList());
-            map.showMap(1, game.teams[1].getSubmarineList());
+            System.out.println("game.teams[game.currentTeam % 2].getTeamId() = " + game.teams[game.currentTeam % 2].getTeamId());   
+            game.map.showMap(0, game.teams[0].getSubmarineList());
+            game.map.showMap(1, game.teams[1].getSubmarineList());
 
             Log log = game.teams[game.currentTeam % 2].takeTurn(game);
             game.teams[(game.currentTeam+1) % 2].tellResponse(log, game);

@@ -1,12 +1,13 @@
 // package com.example;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Strategy {
 
-    private Submarine[] submarines = new Submarine[4];
+    private ArrayList<Submarine> submarines = new ArrayList<>();
     private static final int TEAM_ID = 0;
 
     // 移動可能な最初の潜水艦を変えす
@@ -80,8 +81,8 @@ public class Strategy {
         return null;
     }
 
-    Submarine[] initializeSubmarines(Map map) {
-        Submarine[] submarines_ = new Submarine[4];
+    public static ArrayList<Submarine> initializeSubmarines(Map map, int teamId) {
+        ArrayList<Submarine> submarines_ = new ArrayList<>();
         Random random = new Random();
         HashSet<String> cells = new HashSet<>();
         for (int i = 0; i < 4; i++) {
@@ -97,7 +98,13 @@ public class Strategy {
                     // 潜水艦を配置
                     MapCell cell = map.getCell(y, x); // セルを取得
                     char submarineCode = (char) ('a' + i); // 潜水艦のコード（a, b, c, d）
-                    submarines_[i] = new Submarine(cell, submarineCode, TEAM_ID); // 0番チームの潜水艦 cell.setSubmarine(submarine, 0);  // セルに潜水艦を配置
+                    try {
+                        submarines_.add(new Submarine(cell, submarineCode, teamId));
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("潜水艦の配置に失敗しました。");
+                        System.out.println(cells);
+                        continue;
+                    }
                     System.out.println(
                             "潜水艦 " + submarineCode + " が位置 (" + y + ", " + x + ") に配置されました。");
                     isPlaced = true; // 配置完了
@@ -175,7 +182,7 @@ public class Strategy {
         Map map = new Map();
 
         Strategy strategy = new Strategy();
-        strategy.submarines = strategy.initializeSubmarines(map);
+        strategy.submarines = strategy.initializeSubmarines(map, TEAM_ID);
 
         while (true) {
             // map.showMap(TEAM_ID, strategy.submarines);

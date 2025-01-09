@@ -6,6 +6,7 @@ public class PlayableTeam extends Team {
 
     public PlayableTeam(Map map, int teamId) {
         super(map, teamId);
+        this.submarineList = Strategy.initializeSubmarines(map, teamId);
     }
 
     @Override
@@ -14,7 +15,7 @@ public class PlayableTeam extends Team {
         String input = scanner.nextLine();
         String[] inputArray = input.split(" ");
 
-                String performType = inputArray[0];
+        String performType = inputArray[0];
 
         String cellCode = inputArray[1];
         int[] res = Util.parseCellCode(cellCode);
