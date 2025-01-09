@@ -1,7 +1,6 @@
 // package com.example;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class PlayableTeam extends Team {
 
@@ -41,4 +40,12 @@ public class PlayableTeam extends Team {
         return log;
     }
 
+    @Override
+    public void tellResponse(Log log, Game game) {
+        String reaction = null;
+        if (log.performType.equals("a")) {
+            reaction = this.respondAttack(game.getMap(), log.toCell);
+        }
+        log.setReaction(reaction);
+    }
 }

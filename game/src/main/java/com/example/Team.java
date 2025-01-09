@@ -22,15 +22,20 @@ public abstract class Team {
         return submarineList;
     }
 
-    public void respondAttack(Map map, MapCell cell) {
+    public String respondAttack(Map map, MapCell cell) {
+        String reaction = "nothing";
+
         if (cell.existSubmarine(this.TEAM_ID)) {
             System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.TEAM_ID).getCode() + " が攻撃されました");
-            System.out.println("命中！");
+            reaction = "命中！";
+            System.out.println(reaction);
             Submarine attackedSubmarine = cell.getSubmarine(this.TEAM_ID);
             attackedSubmarine.takeDamage();
-            return;
+            return reaction;
         }
 
+        int y = cell.getY();
+        int x = cell.getX();
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
                 if (dy == 0 && dx == 0) {
@@ -48,12 +53,14 @@ public abstract class Team {
                 }
 
                 if (neighborCell.existSubmarine(this.TEAM_ID)) {
-                    System.out.println("波高し！");
+                    reaction = "波高し！";
+                    System.out.println(reaction);
                     System.out.println("潜水艦 " + neighborCell.getSubmarine(TEAM_ID).getCode() + " 近くにあります");
-                    return;
+                    return reaction;
                 }
             }
         }
+        return reaction;
     }
 
     public void move(char submarineCode, String cellCode, Map map) {
