@@ -21,6 +21,9 @@ public class Game {
         this.history = new History();
     }
 
+    public Map getMap() {
+        return this.map;
+    }
 
 
     public static void main(String[] args) {
@@ -32,8 +35,8 @@ public class Game {
             map.showMap(0, game.teams[0].getSubmarineList());
             map.showMap(1, game.teams[1].getSubmarineList());
 
-            game.teams[game.turn % 2].takeTurn(game); 
-            game.teams[(game.turn+1) % 2].tellResponse(game);
+            Log log = game.teams[game.turn % 2].takeTurn(game);
+            game.teams[(game.turn+1) % 2].tellResponse(log, game);
 
         }
     }

@@ -10,24 +10,35 @@ public class PlayableTeam extends Team {
     }
 
     @Override
-    public Log takeTurn(Map map) {
+    public Log takeTurn(Game game) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         String[] inputArray = input.split(" ");
 
-        if (inputArray[0].equals("m")) {
-            String cellCode = inputArray[1];
-            this.respondAttack(map, cellCode);
-        } 
+                String performType = inputArray[0];
 
-        if (inputArray[0].equals("a")) {
-            String cellCode = inputArray[1];
-            respondAttack(map, cellCode);
-        } 
+        String cellCode = inputArray[1];
+        int[] res = Util.parseCellCode(cellCode);
+        int y = res[0];
+        int x = res[1];
+        MapCell toCell = game.getMap().getCell(y, x);
 
-        ArrayList<Log> logs = new ArrayList<>();
+        String reaction = null;
 
-        return logs;
+        if (performType.equals("m")) {
+            for (Submarine sub : this.getSubmarineList()) {
+                if (sub.getCode() == inputArray[2].charAt(0)) {
+                    reaction = sub.move(toCell);
+                }
+            }
+        }
+
+        if (performType.equals("a")) {
+        }
+
+        Log log = new Log(this.getTeamId(), inputArray[0], toCell, reaction);
+
+        return log;
     }
 
 }

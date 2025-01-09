@@ -22,12 +22,7 @@ public abstract class Team {
         return submarineList;
     }
 
-    public void respondAttack(Map map, String cellCode) {
-        int[] res = Util.parseCellCode(cellCode);
-        int y = res[0];
-        int x = res[1];
-
-        MapCell cell = map.getCell(y, x);
+    public void respondAttack(Map map, MapCell cell) {
         if (cell.existSubmarine(this.TEAM_ID)) {
             System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.TEAM_ID).getCode() + " が攻撃されました");
             System.out.println("命中！");
@@ -83,7 +78,7 @@ public abstract class Team {
         return this.TEAM_ID;
     }
 
-    public abstract void tellAction(Map map);
+    public abstract void tellResponse(Log log, Game game);
 
-    public abstract ArrayList<String> takeTurn(Game game);
+    public abstract Log takeTurn(Game game);
 }

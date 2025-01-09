@@ -6,13 +6,17 @@ public class Log {
     public final int doTeamId;
     public final String performType;
     public final MapCell toCell;
-    public final String react;
+    public String reaction;
 
     public Log(int doTeamId, String performType, MapCell toCell, String react) {
         this.turn = ++counter;
         this.doTeamId = doTeamId;
         this.performType = performType;
         this.toCell = toCell;
-        this.react = react;
+        this.reaction = react;
+    }
+
+    public void setReaction(String reaction) {
+        this.reaction = reaction;
     }
 }

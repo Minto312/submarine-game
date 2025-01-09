@@ -1,5 +1,7 @@
 // package com.example;
+
 public class Submarine {
+
     private int teamId;
     private char code;
     private int hp;
@@ -21,7 +23,7 @@ public class Submarine {
         return this.currentCell;
     }
 
-    public void move(MapCell toCell) {
+    public String move(MapCell toCell) {
         int dy = toCell.getY() - this.currentCell.getY();
         int dx = toCell.getX() - this.currentCell.getX();
 
@@ -42,7 +44,9 @@ public class Submarine {
         }
         System.out.println("[debug] 潜水艦 " + this.code + " が " + direction + " に " + distance
                 + " マス移動しました。(" + toCell.getY() + ", " + toCell.getX() + ")");
-        System.out.println("潜水艦を"+direction+"に"+distance+"マス移動！");
+
+        String reaction = "潜水艦を" + direction + "に" + distance + "マス移動！";
+        System.out.println(reaction);
 
         this.currentCell.removeSubmarine(this.teamId);
 
