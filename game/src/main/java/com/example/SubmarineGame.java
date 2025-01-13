@@ -1,3 +1,4 @@
+// package com.example;
 import java.util.ArrayList;
 
 
@@ -8,12 +9,6 @@ public class SubmarineGame {
     private History history;
 
     public SubmarineGame(int startTeam) {
-        this.turn = startTeam;
-        this.map = new Map();
-        for (int i = 0; i < 2; i++) {
-            this.teams[i] = new PlayableTeam(map, i);
-        }
-        this.history = new History();
     }
 
     public ArrayList<String> nextTurn() {

@@ -1,4 +1,4 @@
-
+// package com.example;
 
 public class MapCell {
     private static final int PLAYER_COUNT = 2;
@@ -8,7 +8,7 @@ public class MapCell {
     private Submarine[] submarine;
 
 
-    public MapCell(int x, int y, boolean isBlocked) {
+    public MapCell(int y, int x, boolean isBlocked) {
         this.x = x;
         this.y = y;
         this.isBlocked = isBlocked;
@@ -17,6 +17,7 @@ public class MapCell {
 
     public void sinkSubmarine() {
         this.isBlocked = true;
+        this.submarine = new Submarine[PLAYER_COUNT]; // 相手の潜水艦も存在しない
     }
 
     public boolean isBlocked() {
@@ -31,12 +32,21 @@ public class MapCell {
     }
 
     public void setSubmarine(Submarine submarine, int teamId) {
-        if (this.submarine[teamId] != null) throw new IllegalArgumentException("Submarine already exists");
+        if (this.submarine[teamId] != null) {
+            throw new IllegalArgumentException("Submarine already exists");
+        }
+        if (this.isBlocked) {
+            throw new IllegalArgumentException("Cell is blocked");
+        }
+        
         this.submarine[teamId] = submarine;
     }
 
     public void removeSubmarine(int teamId) {
-        if (this.submarine[teamId] == null) throw new IllegalArgumentException("No submarine to remove");
+        if (this.submarine[teamId] == null) {
+            throw new IllegalArgumentException("No submarine to remove");
+        }
+
         this.submarine[teamId] = null;
     }
 

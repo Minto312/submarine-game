@@ -1,0 +1,31 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Strategy",
+      "request": "launch",
+      "mainClass": "com.example.Strategy",
+      "projectName": "game"
+    },
+    {
+      "type": "java",
+      "request": "launch",
+      "name": "Launch Game",
+      "mainClass": "com.example.game",
+      "classPaths": [
+        "${workspaceFolder}/game/target/classes",
+        "${workspaceFolder}/game/target/dependency/*"
+      ],
+      "projectName": "game",
+      "preLaunchTask": "build",
+      "postDebugTask": "run"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "mainClass",
+      "description": "Enter the fully qualified name of the main class"
+    }
+  ]
+}

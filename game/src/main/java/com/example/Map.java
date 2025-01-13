@@ -1,10 +1,10 @@
-
+// package com.example;
 import java.util.ArrayList;
 
 
 public class Map {
     private static final int SIZE = 7;
-    private MapCell[][] grid;
+    private final MapCell[][] grid;
 
     public Map() {
         grid = new MapCell[SIZE][SIZE];
@@ -24,9 +24,9 @@ public class Map {
     }
 
     public ArrayList<MapCell> calculateAttackArea(Team team) {
-        ArrayList<MapCell> attackableCells = new ArrayList<MapCell>();
+        ArrayList<MapCell> attackableCells = new ArrayList<>();
         ArrayList<Submarine> submarines = team.getSubmarineList();
-        ArrayList<MapCell> submarineCells = new ArrayList<MapCell>();
+        ArrayList<MapCell> submarineCells = new ArrayList<>();
         for (Submarine submarine : submarines) {
             submarineCells.add(submarine.getCurrentCell());
         }
@@ -45,6 +45,31 @@ public class Map {
             }
         }
         return attackableCells;
+    }
+
+    public void showMap(int teamId, ArrayList<Submarine> submarines) {
+        System.out.println("  0 1 2 3 4 5 6");
+        for (int i = 0; i < SIZE; i++) {
+            if (i == 0 || i == SIZE - 1) {
+                System.out.print(i + " ");
+            } else {
+                System.out.print((char)('A'+i-1) + " ");
+            }
+            for (int j = 0; j < SIZE; j++) {
+                MapCell cell = grid[i][j];
+                if (cell.existSubmarine(teamId)) {
+                    System.out.print(cell.getSubmarine(teamId).getCode() + " ");
+                } else if (cell.isBlocked()) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+        for (Submarine submarine : submarines) {
+            System.out.println(submarine.getCode() + ": " + submarine.getHp() + " ");
+        }
     }
 
 }
