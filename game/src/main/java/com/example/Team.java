@@ -1,7 +1,9 @@
 // package com.example;
+
 import java.util.ArrayList;
 
 public abstract class Team {
+
     private static final int SUBMARINE_COUNT = 4;
     private int TEAM_ID;
     protected ArrayList<Submarine> submarineList;
@@ -62,7 +64,9 @@ public abstract class Team {
 
         MapCell toCell = map.getCell(y, x);
         for (Submarine submarine : submarineList) {
-            if (submarine.getCode() == submarineCode) submarine.move(toCell);
+            if (submarine.getCode() == submarineCode) {
+                submarine.move(toCell);
+            }
         }
     }
 
@@ -77,7 +81,13 @@ public abstract class Team {
         return this.TEAM_ID;
     }
 
-    public abstract void tellResponse(Log log, Game game);
+    public void tellResponse(Log log, Game game) {
+        String reaction = null;
+        if (log.performType.equals("a")) {
+            reaction = this.respondAttack(game.getMap(), log.toCell);
+        }
+        log.setReaction(reaction);
+    }
 
     public abstract Log takeTurn(Game game);
 }
