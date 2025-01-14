@@ -13,7 +13,7 @@ public class ComputerTeam extends Team {
 
     @Override
     public Log takeTurn(Game game) {
-        Log log = strategy.takeTurn(game);
+        Log log = strategy.performTurn(game);
         return log;
     }
 }

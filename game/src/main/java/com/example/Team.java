@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Team {
 
     private static final int SUBMARINE_COUNT = 4;
-    private int TEAM_ID;
+    public static int TEAM_ID;
     protected ArrayList<Submarine> submarineList;
 
     public Team(Map map, int teamId) {
