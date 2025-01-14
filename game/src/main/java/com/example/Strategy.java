@@ -7,8 +7,11 @@ import java.util.Scanner;
 
 public class Strategy {
 
-    private ArrayList<Submarine> submarines = new ArrayList<>();
-    private static final int TEAM_ID = 0;
+    private static Team team;
+
+    public Strategy(Team team) {
+        this.team = team;
+    }
 
     // 移動可能な最初の潜水艦を変えす
     public static Submarine canPlace(Map map, int y, int x) {
