@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Game {
     private final Map map;
+    private int turn = 0;
     private int currentTeam;
     private final Team[] teams;
     private final History history;
@@ -12,14 +13,22 @@ public class Game {
         this.map = new Map();
         
         this.teams = new Team[2];
-        for (int i = 0; i < 2; i++) {
-            this.teams[i] = new PlayableTeam(map, i);
-        }
+        this.teams[0] = new PlayableTeam(this.map, 0);
+        this.teams[1] = new ComputerTeam(this.map, 1);
         this.history = new History();
     }
 
     public Map getMap() {
         return this.map;
+    }
+
+    public int getTurn() {
+        return this.turn;
+    }
+
+    public void stepTurn() {
+        this.turn++;
+        this.currentTeam = (this.currentTeam + 1) % 2;
     }
 
 
@@ -32,12 +41,12 @@ public class Game {
             game.map.showMap(0, game.teams[0].getSubmarineList());
             game.map.showMap(1, game.teams[1].getSubmarineList());
 
-            Log log = game.teams[game.currentTeam % 2].takeTurn(game);
+            Log log = game.teams[game.currentTeam].takeTurn(game);
             game.teams[(game.currentTeam+1) % 2].tellResponse(log, game);
 
             log.showLog(); 
             game.history.addLog(log);
-            game.currentTeam++;
+            game.stepTurn();
         }
     }
 }
