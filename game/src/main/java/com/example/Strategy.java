@@ -7,8 +7,11 @@ import java.util.Scanner;
 
 public class Strategy {
 
-    private ArrayList<Submarine> submarines = new ArrayList<>();
-    private static final int TEAM_ID = 0;
+    private static Team team;
+
+    public Strategy(Team team) {
+        this.team = team;
+    }
 
     // 移動可能な最初の潜水艦を変えす
     public static Submarine canPlace(Map map, int y, int x) {
@@ -133,70 +136,6 @@ public class Strategy {
         } else {
             move(map);
             // attack(map);
-        }
-    }
-
-    public static void respondAttack(Map map, String cellCode) {
-        int[] res = Util.parseCellCode(cellCode);
-        int y = res[0];
-        int x = res[1];
-
-        MapCell cell = map.getCell(y, x);
-        if (cell.existSubmarine(TEAM_ID)) {
-            System.out.println("命中！");
-            System.out.println("[debug] 潜水艦 " + cell.getSubmarine(TEAM_ID).getCode() + " が攻撃されました");
-            Submarine attackedSubmarine = cell.getSubmarine(TEAM_ID);
-            attackedSubmarine.takeDamage();
-            return;
-        }
-
-        for (int dy = -1; dy <= 1; dy++) {
-            for (int dx = -1; dx <= 1; dx++) {
-                if (dy == 0 && dx == 0) {
-                    continue;
-                }
-
-                int neighborY = y + dy;
-                int neighborX = x + dx;
-
-                MapCell neighborCell;
-                try {
-                    neighborCell = map.getCell(neighborY, neighborX);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    continue;
-                }
-
-                if (neighborCell.existSubmarine(TEAM_ID)) {
-                    System.out.println("波高し！");
-                    System.out.println("潜水艦 " + neighborCell.getSubmarine(TEAM_ID).getCode() + " 近くにあります");
-                    return;
-                }
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-        // 初期配置を決定
-        Map map = new Map();
-
-        Strategy strategy = new Strategy();
-        strategy.submarines = strategy.initializeSubmarines(map, TEAM_ID);
-
-        while (true) {
-            // map.showMap(TEAM_ID, strategy.submarines);
-            String input = scanner.nextLine();
-            String[] inputArray = input.split(" ");
-
-            if (inputArray[0].equals("a")) {
-                String cellCode = inputArray[1];
-                respondAttack(map, cellCode);
-            } else {
-                performTurn(map);
-            }
-            // 相手の行動
-            // if(/*相手が攻撃してきたら*/){break;}
         }
     }
 }
