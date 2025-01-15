@@ -15,6 +15,8 @@ public class PlayableTeam extends Team {
     @Override
     public Log takeTurn(Game game) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("チーム" + this.getTeamId() + "のターンです。");
+        System.out.print("-- ex -----\nm a1 c\na a1\n-----------\nPlease input your action: ");
         String input = scanner.nextLine();
         String[] inputArray = input.split(" ");
 

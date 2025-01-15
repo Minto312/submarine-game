@@ -37,15 +37,16 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         
         while (true) {
-            System.out.println("game.teams[game.currentTeam % 2].getTeamId() = " + game.teams[game.currentTeam % 2].getTeamId());   
-            game.map.showMap(0, game.teams[0].getSubmarineList());
-            game.map.showMap(1, game.teams[1].getSubmarineList());
+            System.out.println("Turn: " + game.turn);
+            game.map.showMap(game.teams);
 
             Log log = game.teams[game.currentTeam].takeTurn(game);
             game.teams[(game.currentTeam+1) % 2].tellResponse(log, game);
 
             log.showLog(); 
             game.history.addLog(log);
+            System.out.println("\nEnter to continue\n");
+            scanner.nextLine();
             game.stepTurn();
         }
     }
