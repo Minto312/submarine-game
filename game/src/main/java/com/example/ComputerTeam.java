@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 public class ComputerTeam extends Team {
 
-    private Strategy strategy = new Strategy(this);
+    private Strategy strategy;
 
     public ComputerTeam(Map map, int teamId) {
         super(map, teamId);
+        this.strategy = new Strategy(this);
         this.submarineList = strategy.initializeSubmarines(map);
     }
 

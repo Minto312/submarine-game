@@ -3,7 +3,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Strategy {
 
@@ -14,10 +13,10 @@ public class Strategy {
     }
 
     // 移動可能な最初の潜水艦を変えす
-    public static Submarine canPlace(Map map, int y, int x) {
+    public Submarine canPlace(Map map, int y, int x) {
         MapCell cell = map.getCell(y, x);
         // 配置するセルがブロックされていないか、すでに潜水艦が配置されていないかをチェック
-        if (cell.isBlocked() || cell.existSubmarine(TEAM_ID)) {
+        if (cell.isBlocked() || cell.existSubmarine(team.TEAM_ID)) {
             return null;
         }
 
@@ -45,8 +44,8 @@ public class Strategy {
                     return null;
                 }
             }
-            if (neighborCell.existSubmarine(TEAM_ID)) {
-                return neighborCell.getSubmarine(TEAM_ID);
+            if (neighborCell.existSubmarine(team.TEAM_ID)) {
+                return neighborCell.getSubmarine(team.TEAM_ID);
             }
             return null;
         }
@@ -75,8 +74,8 @@ public class Strategy {
                     return null;
                 }
             }
-            if (neighborCell.existSubmarine(TEAM_ID)) {
-                return neighborCell.getSubmarine(TEAM_ID);
+            if (neighborCell.existSubmarine(team.TEAM_ID)) {
+                return neighborCell.getSubmarine(team.TEAM_ID);
             }
             return null;
         }
@@ -84,7 +83,7 @@ public class Strategy {
         return null;
     }
 
-    public static ArrayList<Submarine> initializeSubmarines(Map map, int teamId) {
+    public ArrayList<Submarine> initializeSubmarines(Map map) {
         ArrayList<Submarine> submarines_ = new ArrayList<>();
         Random random = new Random();
         HashSet<String> cells = new HashSet<>();
@@ -102,7 +101,7 @@ public class Strategy {
                     MapCell cell = map.getCell(y, x); // セルを取得
                     char submarineCode = (char) ('a' + i); // 潜水艦のコード（a, b, c, d）
                     try {
-                        submarines_.add(new Submarine(cell, submarineCode, teamId));
+                        submarines_.add(new Submarine(cell, submarineCode, team.TEAM_ID));
                     } catch (IllegalArgumentException e) {
                         System.out.println("潜水艦の配置に失敗しました。");
                         System.out.println(cells);
@@ -117,7 +116,7 @@ public class Strategy {
         return submarines_;
     }
 
-    public static void move(Map map) {
+    public void move(Map map) {
         Random random = new Random();
         while (true) {
             MapCell toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
@@ -129,13 +128,14 @@ public class Strategy {
         }
     }
 
-    public static void performTurn(Map map) {
+    public Log performTurn(Game game) {
         Random random = new Random();
         if (random.nextInt(10) > -1) {
-            move(map);
+            move(game.getMap());
         } else {
-            move(map);
+            move(game.getMap());
             // attack(map);
         }
+        return null;
     }
 }

@@ -4,9 +4,12 @@ import java.util.Scanner;
 
 public class PlayableTeam extends Team {
 
+    private Strategy strategy;
+
     public PlayableTeam(Map map, int teamId) {
         super(map, teamId);
-        this.submarineList = Strategy.initializeSubmarines(map, teamId);
+        this.strategy = new Strategy(this);
+        this.submarineList = strategy.initializeSubmarines(map);
     }
 
     @Override
