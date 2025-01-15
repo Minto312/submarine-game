@@ -18,13 +18,13 @@ public class ExpectedValue {
                     if (Log.distance == 1) {    // 1マス移動の場合
                         for (int i = 1; i < 5; i++) {
                             for (int j = 1; j < 6; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     } else if (Log.distance == 2) {  // ２マス移動の場合
                         for (int i = 1; i < 4; i++) {
                             for (int j = 1; j < 6; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     }
@@ -32,13 +32,13 @@ public class ExpectedValue {
                     if (Log.distance == 1) {
                         for (int i = 2; i < 6; i++) {
                             for (int j = 1; j < 6; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     } else if (Log.distance == 2) {
                         for (int i = 3; i < 6; i++) {
                             for (int j = 1; j < 6; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     }
@@ -46,13 +46,13 @@ public class ExpectedValue {
                     if (Log.distance == 1) {
                         for (int i = 1; i < 6; i++) {
                             for (int j = 2; j < 6; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     } else if (Log.distance == 2) {
                         for (int i = 1; i < 6; i++) {
                             for (int j = 3; j < 6; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     }
@@ -60,13 +60,13 @@ public class ExpectedValue {
                     if (Log.distance == 1) {
                         for (int i = 1; i < 6; i++) {
                             for (int j = 1; j < 5; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     } else if (Log.distance == 2) {
                         for (int i = 1; i < 6; i++) {
                             for (int j = 1; j < 4; j++) {
-                                masume[i][j] * idou;
+                                masume[i][j] *= idou;
                             }
                         }
                     }
@@ -229,7 +229,6 @@ public class ExpectedValue {
                         masume[x-1][y+1] = masu7;
                         masume[x-1][y] = masu8;
                         masume[x-1][y-1] = masu9;
-                        }
                     } else if (はずれ) {
                         masume[x][y] *= 0.5;
                         masume[x+1][y+1] *= 0.5;

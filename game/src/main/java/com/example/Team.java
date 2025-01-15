@@ -17,7 +17,7 @@ public abstract class Team {
     }
 
     public String respondAttack(Map map, MapCell cell) {
-        String reaction = "nothing";
+        String reaction = "はずれ";
 
         if (cell.existSubmarine(this.TEAM_ID)) {
             System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.TEAM_ID).getCode() + " が攻撃されました");
