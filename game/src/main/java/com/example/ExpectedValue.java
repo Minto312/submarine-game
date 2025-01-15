@@ -11,7 +11,7 @@ public class ExpectedValue {
     // double namitakashi = 0.5;
     // double namitakashiaround = 10;
     // double hazure = 0.5;
-    public void namae () {
+    public static void namae () {
         if (Log.doTeamId == 0) {                // 相手のターン
             if (Log.performType == m) {         // 移動の場合
                 if (Log.direction == n) {       // 北に移動の場合
@@ -99,7 +99,7 @@ public class ExpectedValue {
                         masume[x-1][y+1] *= 0.5;
                         masume[x-1][y] *= 0.5;
                         masume[x-1][y-1] *= 0.5;
-                    } else if {
+                    } else {
                         masume[x][y] *= 50;
                     }
                 } else if (波高し) {
@@ -129,12 +129,12 @@ public class ExpectedValue {
 
     if (相手残り２艦艦) {
         @Override
-        public namae nokori2 {
+        public namae nokori2 () {
             idou = 2;
         }
     } else if (相手残り１艦) {
-        `Override
-        public namae nokori1 {
+        @Override
+        public namae nokori1 () {
             if (Log.doTeamId == 0) {                // 相手のターン
                 if (Log.performType == m) {         // 移動の場合
                     if (Log.direction == n) {       // 北に移動の場合
