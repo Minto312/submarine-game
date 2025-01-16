@@ -26,6 +26,10 @@ public class Game {
         return this.turn;
     }
 
+    public History getHistory() {
+        return this.history;
+    }
+
     public void stepTurn() {
         this.turn++;
         this.currentTeam = (this.currentTeam + 1) % 2;
