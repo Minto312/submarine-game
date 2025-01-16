@@ -28,7 +28,7 @@ public class PlayableTeam extends Team {
         int x = res[1];
         MapCell toCell = game.getMap().getCell(y, x);
 
-        String reaction = null;
+        String reaction = "";
 
         if (performType.equals("m")) {
             for (Submarine sub : this.getSubmarineList()) {

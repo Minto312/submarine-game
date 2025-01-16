@@ -1,4 +1,4 @@
-
+import java.util.Objects;
 
 public class Log {
     public final int turn;
@@ -12,7 +12,7 @@ public class Log {
         this.doTeamId = doTeamId;
         this.performType = performType;
         this.toCell = toCell;
-        this.reaction = react;
+        this.reaction = Objects.requireNonNullElse(react, "");
     }
 
     public void setReaction(String reaction) {
@@ -20,6 +20,6 @@ public class Log {
     }
 
     public void showLog() {
-        System.out.println("[" + this.turn + "ターン目] " + this.doTeamId + "チーム: " + this.performType + " " + this.toCell.getY() + ", " + this.toCell.getX() + " " + this.reaction);
+        System.out.println("[" + this.turn + "ターン目] " + this.doTeamId + "チーム: " + this.performType + " " + this.toCell.getY() + ", " + this.toCell.getX() + "\n" + this.reaction);
     }
 }

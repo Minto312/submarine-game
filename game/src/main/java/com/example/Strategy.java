@@ -116,26 +116,24 @@ public class Strategy {
         return submarines_;
     }
 
-    public void move(Map map) {
+    public Log move(Game game) {
+        Map map = game.getMap();
         Random random = new Random();
+        MapCell toCell;
         while (true) {
-            MapCell toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
+            toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
             Submarine canMoveSubmarine = canPlace(map, toCell.getY(), toCell.getX());
             if (canMoveSubmarine != null) {
                 canMoveSubmarine.move(toCell);
                 break;
             }
         }
+        return new Log(team.TEAM_ID, game.getTurn(), "m", toCell, "");
     }
 
     public Log performTurn(Game game) {
         Random random = new Random();
-        if (random.nextInt(10) > -1) {
-            move(game.getMap());
-        } else {
-            move(game.getMap());
-            // attack(map);
-        }
-        return null;
+        Log log = move(game);
+        return log;
     }
 }

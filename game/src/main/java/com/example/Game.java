@@ -13,7 +13,7 @@ public class Game {
         this.map = new Map();
         
         this.teams = new Team[2];
-        this.teams[0] = new PlayableTeam(this.map, 0);
+        this.teams[0] = new ComputerTeam(this.map, 0);
         this.teams[1] = new ComputerTeam(this.map, 1);
         this.history = new History();
     }
@@ -38,6 +38,7 @@ public class Game {
         
         while (true) {
             System.out.println("Turn: " + game.turn);
+            System.out.println("チーム" + game.currentTeam + "のターンです。");
             game.map.showMap(game.teams);
 
             Log log = game.teams[game.currentTeam].takeTurn(game);

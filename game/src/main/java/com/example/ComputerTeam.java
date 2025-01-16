@@ -1,7 +1,5 @@
 // package com.example;
 
-import java.util.ArrayList;
-
 public class ComputerTeam extends Team {
 
     private Strategy strategy;
