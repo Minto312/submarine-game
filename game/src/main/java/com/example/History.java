@@ -8,6 +8,10 @@ class History {
         logs = new ArrayList<>();
     }
 
+    public Log getLog(int turn) {
+        return logs.get(turn);
+    }
+
     public void addLog(Log log) {
         logs.add(log);
     }
