@@ -151,18 +151,20 @@ public class Strategy {
                 // return underAttack(game);
             }
 
-            if (prevOurLog.reaction.equals("ハズレ！")) {
-                Log ret = attack(game, prevOurLog.targetCell);
-                if (ret != null) {
-                    return ret;
-                }
-                throw new RuntimeException("攻撃できるセルがありません");
-            } else if (prevOurLog.reaction.equals("波高し！")) {
-                // 攻撃した潜水艦の情報をLogに追加．　実装
-                return randomWalk(game);
-                
-            } else if (prevOurLog.reaction.equals("命中！")) {
-                return attack(game, prevOurLog.targetCell);
+            switch (prevOurLog.reaction) {
+                case "ハズレ！":
+                    Log ret = attack(game, prevOurLog.targetCell);
+                    if (ret != null) {
+                        return ret;
+                    }
+                    throw new RuntimeException("攻撃できるセルがありません");
+                case "波高し！":
+                    // 攻撃した潜水艦の情報をLogに追加．　実装
+                    return randomWalk(game);
+                case "命中！":
+                    return attack(game, prevOurLog.targetCell);
+                default:
+                    break;
             }
             
         }
