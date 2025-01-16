@@ -162,6 +162,25 @@ public class Strategy {
         }
     }
 
+    public AttackLog attackNeighbor(Game game, MapCell toCell) {
+        Map map = game.getMap();
+
+        for (int dy=-1; dy <= 1; dy++) {
+            for (int dx=-1; dx <= 1; dx++) {
+                if (dy == 0 && dx == 0) {
+                    continue;
+                }
+                MapCell attackCell = map.getCell(toCell.getY() + dy, toCell.getX() + dx);
+
+                if (canAttack(map, attackCell)) {
+                    return attack(game, attackCell);
+                }
+            }
+        }
+        return null;
+        
+    }
+
     public AttackLog attack(Game game, MapCell toCell) {
         Map map = game.getMap();
         if (canAttack(map, toCell)) {
@@ -184,7 +203,12 @@ public class Strategy {
                     return randomWalk(game);
                 }
             case "波高し！":
-                return randomWalk(game);
+                AttackLog ret2 = attackNeighbor(game, attackLog.targetCell);
+                if (ret2 != null) {
+                    return ret2;
+                } else {
+                    return randomWalk(game);
+                }
             case "命中！":
                 return attack(game, attackLog.targetCell);
             default:
