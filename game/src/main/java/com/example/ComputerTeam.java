@@ -1,17 +1,18 @@
 // package com.example;
 
-import java.util.ArrayList;
-
 public class ComputerTeam extends Team {
+
+    private final Strategy strategy;
 
     public ComputerTeam(Map map, int teamId) {
         super(map, teamId);
-        this.submarineList = Strategy.initializeSubmarines(map, teamId);
+        this.strategy = new Strategy(this);
+        this.submarineList = strategy.initializeSubmarines(map);
     }
 
     @Override
     public Log takeTurn(Game game) {
-        Log log = Strategy.takeTurn(game, this);
+        Log log = strategy.performTurn(game);
         return log;
     }
 }

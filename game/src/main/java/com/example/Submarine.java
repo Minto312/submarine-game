@@ -1,4 +1,5 @@
 // package com.example;
+import java.util.Map;
 
 public class Submarine {
 
@@ -23,7 +24,7 @@ public class Submarine {
         return this.currentCell;
     }
 
-    public String move(MapCell toCell) {
+    public Map<String, Object> move(MapCell toCell) {
         int dy = toCell.getY() - this.currentCell.getY();
         int dx = toCell.getX() - this.currentCell.getX();
 
@@ -53,7 +54,8 @@ public class Submarine {
         this.currentCell = toCell;
         this.currentCell.setSubmarine(this, this.teamId);
 
-        return reaction;
+        Map<String, Object> result = Map.of("direction", direction, "distance", distance);
+        return result;
     }
 
     public int getHp() {
