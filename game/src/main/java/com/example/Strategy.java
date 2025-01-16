@@ -117,6 +117,25 @@ public class Strategy {
         }
     }
 
+    public MoveLog moveNeighbor(Game game, MapCell toCell) {
+        Map map = game.getMap();
+
+        for (int dy=-1; dy <= 1; dy++) {
+            for (int dx=-1; dx <= 1; dx++) {
+                if (dy == 0 && dx == 0) {
+                    continue;
+                }
+
+                MapCell moveCell = map.getCell(toCell.getY() + dy, toCell.getX() + dx);
+                Submarine s = canMove(map, moveCell);
+                if (s != null) {
+                    return move(game, moveCell);
+                }
+            }
+        }
+        return null;
+    }
+
     public MoveLog move(Game game, MapCell toCell) {
         Map map = game.getMap();
         java.util.Map<String, Object> result;
@@ -150,6 +169,27 @@ public class Strategy {
             return new AttackLog(game.getTurn(), team.getTeamId(), toCell);
         }
         return null;
+    }
+
+    public Log underAttack(Game game) {
+        AttackLog attackLog = (AttackLog) game.getHistory().getLog(game.getTurn() - 1);
+        Map map = game.getMap();
+
+        switch (attackLog.reaction) {
+            case "ハズレ！":
+                MoveLog ret = moveNeighbor(game, attackLog.targetCell);
+                if (ret != null) {
+                    return ret;
+                } else {
+                    return randomWalk(game);
+                }
+            case "波高し！":
+                return randomWalk(game);
+            case "命中！":
+                return attack(game, attackLog.targetCell);
+            default:
+                break;
+        }
     }
 
     public Log performTurn(Game game) {
