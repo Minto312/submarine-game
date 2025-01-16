@@ -17,13 +17,15 @@ public abstract class Team {
     }
 
     public String respondAttack(Map map, MapCell cell) {
-        String reaction = "nothing";
+        String reaction = "ハズレ！";
 
         if (cell.existSubmarine(this.getTeamId())) {
             System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.getTeamId()).getCode() + " が攻撃されました");
             reaction = "命中！";
-            System.out.println(reaction);
             Submarine attackedSubmarine = cell.getSubmarine(this.getTeamId());
+            if (attackedSubmarine.getHp() == 1) {
+                reaction = "命中！撃沈！";
+            }
             attackedSubmarine.takeDamage();
             return reaction;
         }
