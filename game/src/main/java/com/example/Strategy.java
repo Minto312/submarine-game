@@ -6,17 +6,21 @@ import java.util.Random;
 
 public class Strategy {
 
-    private static Team team;
+    private final Team team;
 
     public Strategy(Team team) {
         this.team = team;
+    }
+
+    public Team getTeam() {
+        return team;
     }
 
     // 移動可能な最初の潜水艦を変えす
     public Submarine canPlace(Map map, int y, int x) {
         MapCell cell = map.getCell(y, x);
         // 配置するセルがブロックされていないか、すでに潜水艦が配置されていないかをチェック
-        if (cell.isBlocked() || cell.existSubmarine(team.TEAM_ID)) {
+        if (cell.isBlocked() || cell.existSubmarine(team.getTeamId())) {
             return null;
         }
 
@@ -44,8 +48,8 @@ public class Strategy {
                     return null;
                 }
             }
-            if (neighborCell.existSubmarine(team.TEAM_ID)) {
-                return neighborCell.getSubmarine(team.TEAM_ID);
+            if (neighborCell.existSubmarine(team.getTeamId())) {
+                return neighborCell.getSubmarine(team.getTeamId());
             }
             return null;
         }
@@ -74,8 +78,8 @@ public class Strategy {
                     return null;
                 }
             }
-            if (neighborCell.existSubmarine(team.TEAM_ID)) {
-                return neighborCell.getSubmarine(team.TEAM_ID);
+            if (neighborCell.existSubmarine(team.getTeamId())) {
+                return neighborCell.getSubmarine(team.getTeamId());
             }
             return null;
         }
@@ -101,7 +105,7 @@ public class Strategy {
                     MapCell cell = map.getCell(y, x); // セルを取得
                     char submarineCode = (char) ('a' + i); // 潜水艦のコード（a, b, c, d）
                     try {
-                        submarines_.add(new Submarine(cell, submarineCode, team.TEAM_ID));
+                        submarines_.add(new Submarine(cell, submarineCode, team.getTeamId()));
                     } catch (IllegalArgumentException e) {
                         System.out.println("潜水艦の配置に失敗しました。");
                         System.out.println(cells);
@@ -128,7 +132,7 @@ public class Strategy {
                 break;
             }
         }
-        return new Log(team.TEAM_ID, game.getTurn(), "m", toCell, "");
+        return new Log(game.getTurn(), team.getTeamId(), "m", toCell, "");
     }
 
     public Log performTurn(Game game) {

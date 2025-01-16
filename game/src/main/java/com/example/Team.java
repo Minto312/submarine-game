@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Team {
 
     private static final int SUBMARINE_COUNT = 4;
-    public static int TEAM_ID;
+    public int TEAM_ID;
     protected ArrayList<Submarine> submarineList;
 
     public Team(Map map, int teamId) {
@@ -19,11 +19,11 @@ public abstract class Team {
     public String respondAttack(Map map, MapCell cell) {
         String reaction = "nothing";
 
-        if (cell.existSubmarine(this.TEAM_ID)) {
-            System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.TEAM_ID).getCode() + " が攻撃されました");
+        if (cell.existSubmarine(this.getTeamId())) {
+            System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.getTeamId()).getCode() + " が攻撃されました");
             reaction = "命中！";
             System.out.println(reaction);
-            Submarine attackedSubmarine = cell.getSubmarine(this.TEAM_ID);
+            Submarine attackedSubmarine = cell.getSubmarine(this.getTeamId());
             attackedSubmarine.takeDamage();
             return reaction;
         }
@@ -46,7 +46,7 @@ public abstract class Team {
                     continue;
                 }
 
-                if (neighborCell.existSubmarine(this.TEAM_ID)) {
+                if (neighborCell.existSubmarine(this.getTeamId())) {
                     reaction = "波高し！";
                     System.out.println(reaction);
                     System.out.println("潜水艦 " + neighborCell.getSubmarine(TEAM_ID).getCode() + " 近くにあります");

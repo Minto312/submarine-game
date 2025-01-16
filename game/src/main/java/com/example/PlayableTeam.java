@@ -41,8 +41,6 @@ public class PlayableTeam extends Team {
         if (performType.equals("a")) {
         }
 
-        Log log = new Log(game.getTurn(), this.getTeamId(), inputArray[0], toCell, reaction);
-
-        return log;
+        return new Log(game.getTurn(), this.getTeamId(), inputArray[0], toCell, reaction);
     }
 }

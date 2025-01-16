@@ -2,7 +2,7 @@
 
 public class ComputerTeam extends Team {
 
-    private Strategy strategy;
+    private final Strategy strategy;
 
     public ComputerTeam(Map map, int teamId) {
         super(map, teamId);
