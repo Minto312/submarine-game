@@ -7,6 +7,7 @@ import java.util.Random;
 public class Strategy {
 
     private final Team team;
+    private int moveStreak = 0;
 
     public Strategy(Team team) {
         this.team = team;
@@ -123,6 +124,7 @@ public class Strategy {
         Submarine moveSubmarine = canMove(map, toCell);
         if (moveSubmarine != null) {
             result = moveSubmarine.move(toCell);
+            moveStreak++;
             return new MoveLog(game.getTurn(), team.getTeamId(), (String) result.get("direction"),
                     (int) result.get("distance"));
         } else {
@@ -130,9 +132,21 @@ public class Strategy {
         }
     }
 
+    public AttackLog randomAttack(Game game) {
+        Map map = game.getMap();
+        Random random = new Random();
+        while (true) {
+            MapCell toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
+            if (canAttack(map, toCell)) {
+                return attack(game, toCell);
+            }
+        }
+    }
+
     public AttackLog attack(Game game, MapCell toCell) {
         Map map = game.getMap();
         if (canAttack(map, toCell)) {
+            moveStreak = 0;
             return new AttackLog(game.getTurn(), team.getTeamId(), toCell);
         }
         return null;
@@ -173,6 +187,16 @@ public class Strategy {
             }
 
         }
+
+        // -2ターンの時に自軍が移動
+        if (history.getLog(currentTurn - 2) instanceof MoveLog) {
+            if (moveStreak > 2) {
+                return randomAttack(game);
+            } else {
+                return randomWalk(game);
+            }
+        }
+
 
         // とりあえずランダムウォーク
         return randomWalk(game);
