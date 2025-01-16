@@ -124,15 +124,17 @@ public class Strategy {
         Map map = game.getMap();
         Random random = new Random();
         MapCell toCell;
+        java.util.Map<String, Object> result;
         while (true) {
             toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
             Submarine canMoveSubmarine = canPlace(map, toCell.getY(), toCell.getX());
             if (canMoveSubmarine != null) {
-                canMoveSubmarine.move(toCell);
+                result = canMoveSubmarine.move(toCell);
                 break;
             }
         }
-        return new Log(game.getTurn(), team.getTeamId(), "m", toCell, "");
+        return new MoveLog(game.getTurn(), team.getTeamId(), (String) result.get("direction"),
+                (int) result.get("distance"));
     }
 
     public Log performTurn(Game game) {

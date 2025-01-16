@@ -82,16 +82,12 @@ public abstract class Team {
     }
 
     public void tellResponse(Log log, Game game) {
-        String reaction = "";
-        try {
-            if ("a".equals(log.performType)) {
-                reaction = this.respondAttack(game.getMap(), log.toCell);
-            }
-        } catch (NullPointerException e) {
-            System.err.println("log.performType is null");
-            throw e;
+
+        if (log instanceof AttackLog) {
+            AttackLog attackLog = (AttackLog) log;
+            String reaction = this.respondAttack(game.getMap(), attackLog.targetCell);
+            attackLog.setReaction(reaction);
         }
-        log.setReaction(reaction);
     }
 
    public abstract Log takeTurn(Game game);
