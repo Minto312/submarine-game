@@ -142,6 +142,11 @@ public class Strategy {
         History history = game.getHistory();
         int currentTurn = game.getTurn();
 
+        if (currentTurn < 2) {
+            System.out.println("初手はランダムウォーク");
+            return randomWalk(game);
+        }
+
         // -2ターンの時に自軍が攻撃
         if (history.getLog(currentTurn - 2) instanceof AttackLog) {
             AttackLog prevOurLog = (AttackLog) history.getLog(currentTurn - 2);
@@ -166,9 +171,8 @@ public class Strategy {
                 default:
                     break;
             }
-            
-        }
 
+        }
 
         // とりあえずランダムウォーク
         return randomWalk(game);
