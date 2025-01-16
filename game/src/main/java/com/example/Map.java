@@ -1,8 +1,9 @@
 // package com.example;
+
 import java.util.ArrayList;
 
-
 public class Map {
+
     private static final int SIZE = 7;
     private final MapCell[][] grid;
 
@@ -34,31 +35,52 @@ public class Map {
         for (MapCell submarineCell : submarineCells) {
             int x = submarineCell.getX();
             int y = submarineCell.getY();
-            
+
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
-                        MapCell cell = grid[x + i][y + j];
-                        if (!cell.isBlocked() && cell.getSubmarine(team.getTeamId()) == null) {
-                            attackableCells.add(cell);
-                        }
+                    MapCell cell = grid[x + i][y + j];
+                    if (!cell.isBlocked() && cell.getSubmarine(team.getTeamId()) == null) {
+                        attackableCells.add(cell);
+                    }
                 }
             }
         }
         return attackableCells;
     }
 
-    public void showMap(int teamId, ArrayList<Submarine> submarines) {
-        System.out.println("  0 1 2 3 4 5 6");
+    public void showMap(Team[] teams) {    
+        int TEAM_A = 0;
+        int TEAM_B = 1;
+
+        System.out.println("  チーム0           チーム1");
+        System.out.println("  0 1 2 3 4 5 6     0 1 2 3 4 5 6");
         for (int i = 0; i < SIZE; i++) {
             if (i == 0 || i == SIZE - 1) {
                 System.out.print(i + " ");
             } else {
-                System.out.print((char)('A'+i-1) + " ");
+                System.out.print((char) ('A' + i - 1) + " ");
             }
             for (int j = 0; j < SIZE; j++) {
                 MapCell cell = grid[i][j];
-                if (cell.existSubmarine(teamId)) {
-                    System.out.print(cell.getSubmarine(teamId).getCode() + " ");
+                if (cell.existSubmarine(TEAM_A)) {
+                    System.out.print(cell.getSubmarine(TEAM_A).getCode() + " ");
+                } else if (cell.isBlocked()) {
+                    System.out.print("X ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+
+            System.out.print("  ");
+            if (i == 0 || i == SIZE - 1) {
+                System.out.print(i + " ");
+            } else {
+                System.out.print((char) ('A' + i - 1) + " ");
+            }
+            for (int j = 0; j < SIZE; j++) {
+                MapCell cell = grid[i][j];
+                if (cell.existSubmarine(TEAM_B)) {
+                    System.out.print(cell.getSubmarine(TEAM_B).getCode() + " ");
                 } else if (cell.isBlocked()) {
                     System.out.print("X ");
                 } else {
@@ -67,9 +89,20 @@ public class Map {
             }
             System.out.println();
         }
-        for (Submarine submarine : submarines) {
-            System.out.println(submarine.getCode() + ": " + submarine.getHp() + " ");
-        }
+
+        ArrayList<Submarine> submarinesA = teams[TEAM_A].getSubmarineList();
+        ArrayList<Submarine> submarinesB = teams[TEAM_B].getSubmarineList();
+        
+        System.out.print("a: " + submarinesA.get(0).getHp() + "    ");
+        System.out.print("b: " + submarinesA.get(1).getHp() + "      ");
+        System.out.print("a: " + submarinesB.get(0).getHp() + "    ");
+        System.out.print("b: " + submarinesB.get(1).getHp() + " ");
+        System.out.println();
+        System.out.print("c: " + submarinesA.get(2).getHp() + "    ");
+        System.out.print("d: " + submarinesA.get(3).getHp() + "      ");
+        System.out.print("c: " + submarinesB.get(2).getHp() + "    ");
+        System.out.print("d: " + submarinesB.get(3).getHp() + " ");
+        System.out.println();
     }
 
 }

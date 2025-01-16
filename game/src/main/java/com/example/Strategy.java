@@ -3,88 +3,75 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Strategy {
 
-    private static Team team;
+    private final Team team;
 
     public Strategy(Team team) {
         this.team = team;
     }
 
-    // 移動可能な最初の潜水艦を変えす
-    public static Submarine canPlace(Map map, int y, int x) {
-        MapCell cell = map.getCell(y, x);
-        // 配置するセルがブロックされていないか、すでに潜水艦が配置されていないかをチェック
-        if (cell.isBlocked() || cell.existSubmarine(TEAM_ID)) {
+    public Team getTeam() {
+        return team;
+    }
+
+    private Submarine canMove(Map map, MapCell toCell) {
+        if (toCell.isBlocked() || toCell.existSubmarine(team.getTeamId())) {
             return null;
         }
 
-        int dx = 0;
+        int y = toCell.getY();
+        int x = toCell.getX();
+
         for (int dy = -2; dy <= 2; dy++) {
-            if (dy == 0) {
-                continue;
-            }
-
-            int neighborY = y + dy;
-            int neighborX = x + dx;
-
-            // 目的セルの2マス以内に潜水艦がいるかを確認
-            MapCell neighborCell;
-            try {
-                neighborCell = map.getCell(neighborY, neighborX);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                continue;
-            }
-            if (neighborCell.isBlocked()) {
-                if (dy < 0) {
-                    dy = 0;
+            for (int dx = -2; dx <= 2; dx++) {
+                if (dy == 0 && dx == 0) {
                     continue;
-                } else {
-                    return null;
+                }
+                if (!(dy == 0 || dx == 0)) {
+                    continue;
+                }
+
+                int neighborY = y + dy;
+                int neighborX = x + dx;
+
+                MapCell neighborCell;
+                try {
+                    neighborCell = map.getCell(neighborY, neighborX);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    continue;
+                }
+
+                if (neighborCell.existSubmarine(team.getTeamId())) {
+                    return neighborCell.getSubmarine(team.getTeamId());
                 }
             }
-            if (neighborCell.existSubmarine(TEAM_ID)) {
-                return neighborCell.getSubmarine(TEAM_ID);
-            }
-            return null;
         }
-
-        int dy = 0;
-        for (dx = -2; dx <= 2; dx++) {
-            if (dx == 0) {
-                continue;
-            }
-
-            int neighborY = y + dy;
-            int neighborX = x + dx;
-
-            // 目的セルの2マス以内に潜水艦がいるかを確認
-            MapCell neighborCell;
-            try {
-                neighborCell = map.getCell(neighborY, neighborX);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                continue;
-            }
-            if (neighborCell.isBlocked()) {
-                if (dx < 0) {
-                    dx = 0;
-                    continue;
-                } else {
-                    return null;
-                }
-            }
-            if (neighborCell.existSubmarine(TEAM_ID)) {
-                return neighborCell.getSubmarine(TEAM_ID);
-            }
-            return null;
-        }
-
         return null;
     }
 
-    public static ArrayList<Submarine> initializeSubmarines(Map map, int teamId) {
+    private boolean canAttack(Map map, MapCell toCell) {
+        if (toCell.isBlocked()) {
+            return false;
+        }
+        if (toCell.existSubmarine(team.getTeamId())) {
+            return false;
+        }
+
+        boolean canAttack = false;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                MapCell cell = map.getCell(toCell.getY() + i, toCell.getX() + j);
+                if (cell.existSubmarine(team.getTeamId())) {
+                    canAttack = true;
+                }
+            }
+        }
+        return canAttack;
+    }
+
+    public ArrayList<Submarine> initializeSubmarines(Map map) {
         ArrayList<Submarine> submarines_ = new ArrayList<>();
         Random random = new Random();
         HashSet<String> cells = new HashSet<>();
@@ -102,7 +89,7 @@ public class Strategy {
                     MapCell cell = map.getCell(y, x); // セルを取得
                     char submarineCode = (char) ('a' + i); // 潜水艦のコード（a, b, c, d）
                     try {
-                        submarines_.add(new Submarine(cell, submarineCode, teamId));
+                        submarines_.add(new Submarine(cell, submarineCode, team.getTeamId()));
                     } catch (IllegalArgumentException e) {
                         System.out.println("潜水艦の配置に失敗しました。");
                         System.out.println(cells);
@@ -117,25 +104,71 @@ public class Strategy {
         return submarines_;
     }
 
-    public static void move(Map map) {
+    public MoveLog randomWalk(Game game) {
+        Map map = game.getMap();
         Random random = new Random();
         while (true) {
             MapCell toCell = map.getCell(random.nextInt(5) + 1, random.nextInt(5) + 1);
-            Submarine canMoveSubmarine = canPlace(map, toCell.getY(), toCell.getX());
+            Submarine canMoveSubmarine = canMove(map, toCell);
             if (canMoveSubmarine != null) {
-                canMoveSubmarine.move(toCell);
-                break;
+                return move(game, toCell);
             }
         }
     }
 
-    public static void performTurn(Map map) {
-        Random random = new Random();
-        if (random.nextInt(10) > -1) {
-            move(map);
+    public MoveLog move(Game game, MapCell toCell) {
+        Map map = game.getMap();
+        java.util.Map<String, Object> result;
+
+        Submarine moveSubmarine = canMove(map, toCell);
+        if (moveSubmarine != null) {
+            result = moveSubmarine.move(toCell);
+            return new MoveLog(game.getTurn(), team.getTeamId(), (String) result.get("direction"),
+                    (int) result.get("distance"));
         } else {
-            move(map);
-            // attack(map);
+            return null;
         }
+    }
+
+    public AttackLog attack(Game game, MapCell toCell) {
+        Map map = game.getMap();
+        if (canAttack(map, toCell)) {
+            return new AttackLog(game.getTurn(), team.getTeamId(), toCell);
+        }
+        return null;
+    }
+
+    public Log performTurn(Game game) {
+        History history = game.getHistory();
+        int currentTurn = game.getTurn();
+
+        // -2ターンの時に自軍が攻撃
+        if (history.getLog(currentTurn - 2) instanceof AttackLog) {
+            AttackLog prevOurLog = (AttackLog) history.getLog(currentTurn - 2);
+
+            Log prevEnemyLog = history.getLog(currentTurn - 1);
+            if (prevEnemyLog instanceof AttackLog) {
+                // return underAttack(game);
+            }
+
+            if (prevOurLog.reaction.equals("ハズレ！")) {
+                Log ret = attack(game, prevOurLog.targetCell);
+                if (ret != null) {
+                    return ret;
+                }
+                throw new RuntimeException("攻撃できるセルがありません");
+            } else if (prevOurLog.reaction.equals("波高し！")) {
+                // 攻撃した潜水艦の情報をLogに追加．　実装
+                return randomWalk(game);
+                
+            } else if (prevOurLog.reaction.equals("命中！")) {
+                return attack(game, prevOurLog.targetCell);
+            }
+            
+        }
+
+
+        // とりあえずランダムウォーク
+        return randomWalk(game);
     }
 }

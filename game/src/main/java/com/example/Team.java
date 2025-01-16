@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Team {
 
     private static final int SUBMARINE_COUNT = 4;
-    public static int TEAM_ID;
+    public int TEAM_ID;
     protected ArrayList<Submarine> submarineList;
 
     public Team(Map map, int teamId) {
@@ -17,13 +17,15 @@ public abstract class Team {
     }
 
     public String respondAttack(Map map, MapCell cell) {
-        String reaction = "nothing";
+        String reaction = "ハズレ！";
 
-        if (cell.existSubmarine(this.TEAM_ID)) {
-            System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.TEAM_ID).getCode() + " が攻撃されました");
+        if (cell.existSubmarine(this.getTeamId())) {
+            System.out.println("[debug] 潜水艦 " + cell.getSubmarine(this.getTeamId()).getCode() + " が攻撃されました");
             reaction = "命中！";
-            System.out.println(reaction);
-            Submarine attackedSubmarine = cell.getSubmarine(this.TEAM_ID);
+            Submarine attackedSubmarine = cell.getSubmarine(this.getTeamId());
+            if (attackedSubmarine.getHp() == 1) {
+                reaction = "命中！撃沈！";
+            }
             attackedSubmarine.takeDamage();
             return reaction;
         }
@@ -46,7 +48,7 @@ public abstract class Team {
                     continue;
                 }
 
-                if (neighborCell.existSubmarine(this.TEAM_ID)) {
+                if (neighborCell.existSubmarine(this.getTeamId())) {
                     reaction = "波高し！";
                     System.out.println(reaction);
                     System.out.println("潜水艦 " + neighborCell.getSubmarine(TEAM_ID).getCode() + " 近くにあります");
@@ -82,12 +84,13 @@ public abstract class Team {
     }
 
     public void tellResponse(Log log, Game game) {
-        String reaction = null;
-        if (log.performType.equals("a")) {
-            reaction = this.respondAttack(game.getMap(), log.toCell);
+
+        if (log instanceof AttackLog) {
+            AttackLog attackLog = (AttackLog) log;
+            String reaction = this.respondAttack(game.getMap(), attackLog.targetCell);
+            attackLog.setReaction(reaction);
         }
-        log.setReaction(reaction);
     }
 
-    public abstract Log takeTurn(Game game);
+   public abstract Log takeTurn(Game game);
 }
