@@ -223,7 +223,7 @@ public class Strategy {
                     return randomWalk(game);
                 }
             default:
-                break;
+                return randomWalk(game);
         }
     }
 
