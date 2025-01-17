@@ -136,6 +136,11 @@ public class Strategy {
         return null;
     }
 
+    public MoveLog moveSpoof(Game game, MapCell targetCell) {
+        //TODO
+        return randomWalk(game);
+    }
+
     public MoveLog move(Game game, MapCell toCell) {
         Map map = game.getMap();
         java.util.Map<String, Object> result;
@@ -210,7 +215,12 @@ public class Strategy {
                     return randomWalk(game);
                 }
             case "命中！":
-                return attack(game, attackLog.targetCell);
+                MoveLog ret3 = moveSpoof(game, attackLog.targetCell);
+                if (ret3 != null) {
+                    return ret3;
+                } else {
+                    return randomWalk(game);
+                }
             default:
                 break;
         }
