@@ -72,6 +72,7 @@ public class Strategy {
         return canAttack;
     }
 
+    //TODO
     public ArrayList<Submarine> initializeSubmarines(Map map) {
         ArrayList<Submarine> submarines_ = new ArrayList<>();
         Random random = new Random();
@@ -241,7 +242,7 @@ public class Strategy {
 
             Log prevEnemyLog = history.getLog(currentTurn - 1);
             if (prevEnemyLog instanceof AttackLog) {
-                // return underAttack(game);
+                return underAttack(game);
             }
 
             switch (prevOurLog.reaction) {
@@ -252,7 +253,7 @@ public class Strategy {
                     }
                     throw new RuntimeException("攻撃できるセルがありません");
                 case "波高し！":
-                    // 攻撃した潜水艦の情報をLogに追加．　実装
+                    //TODO 攻撃した潜水艦の情報をLogに追加．　実装
                     return randomWalk(game);
                 case "命中！":
                     return attack(game, prevOurLog.targetCell);
